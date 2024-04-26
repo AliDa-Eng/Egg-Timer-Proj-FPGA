@@ -1,0 +1,46 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 04/09/2024 07:32:45 PM
+// Design Name: 
+// Module Name: db_pulse
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module db_pulse(
+    input clk, //this clock must be slow enough to allow for button to settle ie few milliseconds
+    input rst,
+    input press,
+    output press_db
+    //output test
+    );
+    reg q1,q2;
+    wire valid;
+    
+    assign test = press_db;
+    
+    always@(posedge clk or posedge rst) begin 
+    q1<=press; 
+    // q1 intialized to buttom press either mins or seconds 
+    q2<=q1;
+    
+    end 
+   // assign q2 =q1;
+    
+  //  always@(posedge clk)q2<=q1;
+    assign valid = ~(q1 ^ q2); //XNOR gate to generate 'valid' signal
+    assign press_db = valid & q2;
+endmodule
